@@ -1,0 +1,4 @@
+#Fri Oct 16 15:42:48 EET 2020
+base.0=C\:\\src\\flutterDemo\\new\\example1_local_json_write_read\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

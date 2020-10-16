@@ -16,22 +16,20 @@ class _AppState extends State<App> {
   JsonHelper jsonman;
   Map<String, dynamic> content;
 
-  void Guncelle(){
+  void guncelle() {
     setState(() {
-       content = jsonman.read();
+      content = jsonman.read();
     });
   }
 
   @override
   void initState() {
     super.initState();
-    jsonman = JsonHelper("test");   // json file name => .../test.json
+    jsonman = JsonHelper("test"); // json file name => .../test.json
     jsonman.initialize();
-    setState(() {
-      Future.delayed(Duration(seconds: 1), () {
-        setState(() {
-          Guncelle();
-        });
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        guncelle();
       });
     });
   }
@@ -80,8 +78,9 @@ class _AppState extends State<App> {
                     padding: EdgeInsets.all(5),
                     child: FlatButton(
                       onPressed: () {
-                        jsonman.create(controllerKey.text, controllerValue.text);
-                        Guncelle();
+                        jsonman.create(
+                            controllerKey.text, controllerValue.text);
+                        guncelle();
                       },
                       child: Text("CREATE"),
                       color: Colors.greenAccent,
@@ -93,8 +92,9 @@ class _AppState extends State<App> {
                     padding: EdgeInsets.all(5),
                     child: FlatButton(
                       onPressed: () {
-                        jsonman.update(controllerKey.text, controllerValue.text);
-                        Guncelle();
+                        jsonman.update(
+                            controllerKey.text, controllerValue.text);
+                        guncelle();
                       },
                       child: Text("UPDATE"),
                       color: Colors.blueAccent,
@@ -107,7 +107,7 @@ class _AppState extends State<App> {
                     child: FlatButton(
                       onPressed: () {
                         jsonman.delete(controllerKey.text);
-                        Guncelle();
+                        guncelle();
                       },
                       child: Text("DELETE"),
                       color: Colors.redAccent,
@@ -121,18 +121,22 @@ class _AppState extends State<App> {
               child: ListView.builder(
                 itemCount: content.length,
                 itemBuilder: (context, index) {
-                  String key = content.keys.elementAt(index);
-                  String value = content.values.elementAt(index);
-                  return ListTile(
-                    title: Text(key),
-                    subtitle: Text(value),
-                    onTap: () {
-                      setState(() {
-                        controllerKey.text = key;
-                        controllerValue.text = value;
-                      });
-                    },
-                  );
+                  if (content.isEmpty) {
+                    return Text("veri yok");
+                  } else {
+                    String key = content.keys.elementAt(index);
+                    String value = content.values.elementAt(index);
+                    return ListTile(
+                      title: Text(key),
+                      subtitle: Text(value),
+                      onTap: () {
+                        setState(() {
+                          controllerKey.text = key;
+                          controllerValue.text = value;
+                        });
+                      },
+                    );
+                  }
                 },
               ),
             )
